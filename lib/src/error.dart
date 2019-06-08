@@ -1,9 +1,7 @@
-import 'package:args/args.dart';
-
-class Error {
+class ErrorMaker {
   final String usage;
 
-  Error(this.usage);
+  ErrorMaker(this.usage);
 
   String multipleInputs(List<String> files) {
     return usageWithError("Multiple input files not supported yet: $files!");
@@ -15,6 +13,10 @@ class Error {
 
   String countNotNumber(String count) {
     return usageWithError("Specified count $count is not a number");
+  }
+
+  String multipleTypes(List<String> types) {
+    return usageWithError("Only one column type definition allowed. Multiple provided: ${types}!");
   }
 
   String usageWithError(String error) {

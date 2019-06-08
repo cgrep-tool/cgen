@@ -1,4 +1,12 @@
-A sample command-line application.
+# cgen
 
-Created from templates made available by Stagehand under a BSD-style
-[license](https://github.com/dart-lang/stagehand/blob/master/LICENSE).
+CLI to generate a number, date, string or duration column in a CSV, TSV, etc.
+
+# Example
+
+## Generate integers
+
+```bash
+cgen -I --min 20 --max 55 -c 100 > nums.csv
+```
+

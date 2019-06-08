@@ -18,17 +18,18 @@ class NewDataOption implements Options {
     }
   }
 
-  static NewDataOption parse(ArgResults result, Error errMaker) {
+  static Future<NewDataOption> parse(ArgResults result, ErrorMaker errMaker) async {
     int count;
-    if (result['count'] == null) {
+    String countStr = result['count'];
+    if (countStr == null) {
       stderr.writeln(errMaker.countNotFound());
       exit(2);
     }
-    count = int.tryParse(result['count']);
+    count = int.tryParse(countStr);
     if (count == null) {
-      stderr.writeln(errMaker.countNotNumber(result['count']));
+      stderr.writeln(errMaker.countNotNumber(countStr));
       exit(2);
     }
-    return NewDataOption(ValueRange.parse(result), count);
+    return NewDataOption(await ValueRange.parse(result, errMaker), count);
   }
 }

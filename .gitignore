@@ -12,3 +12,5 @@ doc/api/
 
 *.iml
 .idea
+
+/_test_files

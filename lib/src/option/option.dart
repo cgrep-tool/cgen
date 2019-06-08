@@ -11,29 +11,31 @@ export 'new_data.dart';
 abstract class Options {
   Future<void> perform();
 
-  factory Options.parse(List<String> args) {
+  static Future<Options> parse(List<String> args) async {
     final parser = ArgParser()
       ..addOption('separator', abbr: 's', defaultsTo: ',')
       ..addOption('count', abbr: 'c')
-      ..addOption('int')
-      ..addOption('double')
-      ..addOption('date')
-      ..addOption('duration')
-      ..addOption('bool')
-      ..addOption('min');
+      ..addFlag('Int', abbr: 'I', defaultsTo: false)
+      ..addFlag('Double', abbr: 'D', defaultsTo: false)
+      ..addFlag('Date', abbr: 'T', defaultsTo: false)
+      ..addFlag('Duration', abbr: 'U', defaultsTo: false)
+      ..addFlag('Bool', abbr: 'B', defaultsTo: false)
+      ..addOption('one-of', abbr: 'o')
+      ..addOption('min', abbr: 'm')
+      ..addOption('max', abbr: 'x');
 
     final result = parser.parse(args);
-    final errMaker = Error(parser.usage);
+    final errMaker = ErrorMaker(parser.usage);
 
     if (result.rest.length > 1) {
       stderr.writeln(errMaker.multipleInputs(result.rest));
       exit(2);
     }
 
-    if(result.rest.isEmpty) {
-      return NewDataOption.parse(result, errMaker);
+    if (result.rest.isEmpty) {
+      return await NewDataOption.parse(result, errMaker);
     } else {
-      return AppendOption.parse(result);
+      return await AppendOption.parse(result, errMaker);
     }
   }
 }
