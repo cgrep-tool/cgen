@@ -1,11 +1,12 @@
 import 'dart:io';
 import 'package:args/args.dart';
+import 'package:random_data/random_data.dart';
 import '../range.dart';
 import '../error.dart';
 import 'option.dart';
 
 class NewDataOption implements Options {
-  final ValueRange spec;
+  final Generator spec;
 
   final int count;
 
@@ -30,6 +31,6 @@ class NewDataOption implements Options {
       stderr.writeln(errMaker.countNotNumber(countStr));
       exit(2);
     }
-    return NewDataOption(await ValueRange.parse(result, errMaker), count);
+    return NewDataOption(await Gen.parse(result, errMaker), count);
   }
 }
