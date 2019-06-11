@@ -19,7 +19,10 @@ abstract class Options {
           help:
               'Specifies the column separator for the input and output files.',
           valueHelp: r'\t')
-      ..addOption('seed', abbr: 's', help: ('Seed for random number generator'), valueHelp: '555')
+      ..addOption('seed',
+          abbr: 's',
+          help: ('Seed for random number generator'),
+          valueHelp: '555')
       ..addOption('count',
           abbr: 'c',
           help:
@@ -74,8 +77,6 @@ abstract class Options {
     // TODO parser.addCommand(name);
 
     final result = parser.parse(args);
-
-
 
     final errMaker = ErrorMaker(parser.usage);
 

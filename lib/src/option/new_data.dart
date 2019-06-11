@@ -19,7 +19,8 @@ class NewDataOption implements Options {
     }
   }
 
-  static Future<NewDataOption> parse(ArgResults result, ErrorMaker errMaker) async {
+  static Future<NewDataOption> parse(
+      ArgResults result, ErrorMaker errMaker) async {
     int count;
     String countStr = result['count'];
     if (countStr == null) {

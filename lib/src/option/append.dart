@@ -37,12 +37,14 @@ class AppendOption implements Options {
     }
   }
 
-  static Future<AppendOption> parse(ArgResults result, ErrorMaker errMaker) async {
-    if(result['count'] != null) {
+  static Future<AppendOption> parse(
+      ArgResults result, ErrorMaker errMaker) async {
+    if (result['count'] != null) {
       errMaker.printError("Option 'count' is not compatible with append mode");
     }
 
     String separator = result['separator'];
-    return AppendOption(result.rest[0], await Gen.parse(result, errMaker), separator);
+    return AppendOption(
+        result.rest[0], await Gen.parse(result, errMaker), separator);
   }
 }

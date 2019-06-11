@@ -16,7 +16,8 @@ class ErrorMaker {
   }
 
   String multipleTypes(List<String> types) {
-    return printError("Only one column type definition allowed. Multiple provided: ${types}!");
+    return printError(
+        "Only one column type definition allowed. Multiple provided: ${types}!");
   }
 
   String printError(String error) {
