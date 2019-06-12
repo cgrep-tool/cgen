@@ -15,7 +15,7 @@ dependencies:
   duration: ^2.0.8
   string_unescape: ^1.5.1
   random_string: ^0.0.2
-  random_data: ^1.5.5
+  random_data: ^1.5.8
 
 dev_dependencies:
   pedantic: ^1.0.0

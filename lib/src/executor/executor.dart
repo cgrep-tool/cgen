@@ -1,17 +1,29 @@
-import 'dart:io';
 import 'package:args/args.dart';
-import '../error.dart';
-
-import 'append.dart';
-import 'new_data.dart';
+import 'package:random_data/random_data.dart';
 
 export 'append.dart';
 export 'new_data.dart';
 
-abstract class Options {
+typedef Formatter<T> = String Function(T value);
+
+class WithFormatter {
+  final Generator gen;
+
+  final Formatter formatter;
+
+  WithFormatter(this.gen, {this.formatter});
+
+  String next() {
+    dynamic v = gen.next();
+    if(formatter == null) return v.toString();
+    return formatter(v);
+  }
+}
+
+abstract class Executor {
   Future<void> perform();
 
-  static Future<Options> parse(List<String> args) async {
+  static Future<Executor> parse(List<String> args) async {
     final parser = ArgParser()
       ..addOption('delimiter',
           abbr: 'd',
@@ -32,8 +44,6 @@ abstract class Options {
         'Int',
         abbr: 'I',
         defaultsTo: false,
-        help:
-            'Command to generate random integers. Use max and min options to specify minimum and maximum limits of random integers generated.',
       )
       ..addFlag(
         'Double',
@@ -73,22 +83,5 @@ abstract class Options {
       ..addOption('max',
           abbr: 'x',
           help: 'Provides maximum limit of the randomly generated column.');
-
-    // TODO parser.addCommand(name);
-
-    final result = parser.parse(args);
-
-    final errMaker = ErrorMaker(parser.usage);
-
-    if (result.rest.length > 1) {
-      stderr.writeln(errMaker.multipleInputs(result.rest));
-      exit(2);
-    }
-
-    if (result.rest.isEmpty) {
-      return await NewDataOption.parse(result, errMaker);
-    } else {
-      return await AppendOption.parse(result, errMaker);
-    }
   }
 }

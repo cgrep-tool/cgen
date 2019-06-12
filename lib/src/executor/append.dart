@@ -1,13 +1,9 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:args/args.dart';
-import 'package:random_data/random_data.dart';
-import '../range.dart';
-import 'option.dart';
-import '../error.dart';
+import 'executor.dart';
 
-class AppendOption implements Options {
-  final Generator spec;
+class AppendOption implements Executor {
+  final WithFormatter spec;
 
   final String separator;
 
@@ -35,16 +31,5 @@ class AppendOption implements Options {
       dynamic v = spec.next();
       stdout.writeln("$line$separator$v");
     }
-  }
-
-  static Future<AppendOption> parse(
-      ArgResults result, ErrorMaker errMaker) async {
-    if (result['count'] != null) {
-      errMaker.printError("Option 'count' is not compatible with append mode");
-    }
-
-    String separator = result['separator'];
-    return AppendOption(
-        result.rest[0], await Gen.parse(result, errMaker), separator);
   }
 }

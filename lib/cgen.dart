@@ -1,6 +1,7 @@
-import 'src/option/option.dart';
+import 'package:cgen/src/cmd/cmd.dart';
+
+import 'src/executor/executor.dart';
 
 Future<void> perform(List<String> args) async {
-  final options = await Options.parse(args);
-  await options.perform();
+  await RootCmd().go(args);
 }
